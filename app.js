@@ -1,9 +1,9 @@
 /* ---------- app ---------- */
-let S={b:STD.slice(),t:'w',c:cr(STD),ep:-1},H=[],lm=null,sel=-1,tg=[],flip=0,bots={w:0,b:0},clk=null,last=0,flag=0,scr='menu',opt={delay:1,hints:1},mode='game',cfg=null,EB,ET='w',pal='P',gid=0,over=0,pend=0,promoMs,cand;
+let S={b:STD.slice(),t:'w',c:cr(STD),ep:-1},H=[],lm=null,sel=-1,tg=[],flip=0,bots={w:0,b:0},clk=null,last=0,flag=0,scr='menu',opt={delay:1,hints:1,snd:1},mode='game',cfg=null,EB,ET='w',pal='P',gid=0,over=0,pend=0,promoMs,cand;
 function newGame(c){cfg=c;S={b:c.b.slice(),t:c.t,c:cr(c.b),ep:-1};H=[];lm=null;sel=-1;tg=[];gid++;pend=0;mode='game';flag=0;clk=c.tm?{w:c.tm*60,b:c.tm*60,inc:c.inc}:null;last=Date.now();
 const hc=c.col==='r'?'wb'[Math.random()*2|0]:c.col;bots=c.opp==='bot'?{w:hc==='w'?0:c.L,b:hc==='w'?c.L:0}:c.opp==='bb'?{w:c.L,b:c.L2}:{w:0,b:0};flip=bots.w&&!bots.b?1:0;render();maybeBot()}
 function editor(){mode='edit';gid++;EB=S.b.slice();ET=S.t;flip=0;render()}
-function doMove(m){if(clk)clk[S.t]+=clk.inc;H.push({s:S,l:lm});S=mk(S,m);lm=[m.f,m.t];sel=-1;tg=[];render();maybeBot()}
+function doMove(m){const cap=S.b[m.t]||m.ep||m.x!=null;if(clk)clk[S.t]+=clk.inc;H.push({s:S,l:lm});S=mk(S,m);lm=[m.f,m.t];sel=-1;tg=[];render();snd(chk(S.b,S.t==='w')?'check':m.pr?'promote':cap?'capture':'move');maybeBot()}
 function maybeBot(){if(!bot||over||S.t!==bot)return;const g=gid;$('st').textContent='Bot is thinking…';setTimeout(()=>{if(g!==gid)return;const m=think(S,lvl);if(m)doMove(m)},60)}
 function undo(){if(!H.length||pend)return;gid++;let x=H.pop();S=x.s;lm=x.l;if(bot&&S.t===bot&&H.length){x=H.pop();S=x.s;lm=x.l}sel=-1;tg=[];render();maybeBot()}
 function tap(i){
@@ -49,3 +49,8 @@ function go(){$('md').className='';const[tm,inc]=$('tm').value.split(',').map(Nu
 const _n=newGame,_e=editor;newGame=c=>{go2('play');_n(c)};editor=()=>{go2('play');_e()};
 function go2(n){scr=n;for(const s of['menu','settings','play'])$(s).style.display=s===n?'':'none';if(n==='menu')$('rs').style.display=cfg?'':'none';if(n==='play')render()}
 go2('menu');
+
+const SN={click:.2,move:.6,capture:.7,check:.8,promote:.7},AU={};
+for(const k in SN){AU[k]=new Audio(k+'.mp3');AU[k].preload='auto'}
+function snd(k){if(!opt.snd)return;const a=AU[k].cloneNode();a.volume=SN[k];a.play().catch(()=>{})}
+document.addEventListener('click',e=>{if(e.target.closest('button'))snd('click')});
