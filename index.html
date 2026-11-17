@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chess Studio</title>
+<meta name="theme-color" content="#d9640a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css"></head><body>
+<h1>Chess Studio</h1>
+<div id="menu" class="scr"><div class="mn"><button class="pri" onclick="openSetup(STD,'w')">Play</button><button id="rs" onclick="go2('play')" style="display:none">Resume game</button><button onclick="editor()">Board editor</button><button onclick="go2('settings')">Settings</button></div></div>
+<div id="settings" class="scr" style="display:none"><div id="sh"><button onclick="go2('menu')">← Menu</button><b>Settings</b></div>
+<div id="thm"><label>Board theme<select onchange="setC(...TH[this.value])"><option>Orange &amp; Blue</option><option>Slate</option><option>Classic</option><option>Forest</option><option>Rose</option><option>Midnight</option></select></label>
+<label>Light squares<input type="color" id="c1" value="#f6c177" oninput="setC(this.value,$('c2').value)"></label>
+<label>Dark squares<input type="color" id="c2" value="#2f6db5" oninput="setC($('c1').value,this.value)"></label>
+<label>White pieces<input type="color" value="#ffffff" oninput="document.documentElement.style.setProperty('--pw',this.value)"></label>
+<label>Black pieces<input type="color" value="#15191d" oninput="document.documentElement.style.setProperty('--pb',this.value)"></label>
+<label>Page theme<select onchange="document.documentElement.dataset.theme=this.value"><option value="">Auto</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
+<label>Bot thinking delay<select onchange="opt.delay=+this.value"><option value="1">On</option><option value="0">Off</option></select></label>
+<label>Show move hints<select onchange="opt.hints=+this.value"><option value="1">On</option><option value="0">Off</option></select></label>
+<label>Sound<select onchange="opt.snd=+this.value"><option value="1">On</option><option value="0">Off</option></select></label></div></div>
+<div id="play" class="scr" style="display:none"><div id="ph"></div><div id="ck"></div><div id="st"></div><div id="bd"></div><div id="pal"></div><div id="ctl"></div></div>
+<div id="md"><div id="mb"></div></div>
+<script src="engine.js"></script>
+<script src="bot.js"></script>
+<script src="app.js"></script>
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js'))</script>
+</body></html>
