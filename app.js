@@ -50,7 +50,6 @@ const _n=newGame,_e=editor;newGame=c=>{go2('play');_n(c)};editor=()=>{go2('play'
 function go2(n){scr=n;for(const s of['menu','settings','play'])$(s).style.display=s===n?'':'none';if(n==='menu')$('rs').style.display=cfg?'':'none';if(n==='play')render()}
 go2('menu');
 
-const SN={click:.2,move:.6,capture:.7,check:.8,promote:.7},AU={};
+const SN={move:.6,capture:.7,check:.8,promote:.7},AU={};
 for(const k in SN){AU[k]=new Audio(k+'.mp3');AU[k].preload='auto'}
 function snd(k){if(!opt.snd)return;const a=AU[k].cloneNode();a.volume=SN[k];a.play().catch(()=>{})}
-document.addEventListener('click',e=>{if(e.target.closest('button'))snd('click')});

@@ -1,4 +1,4 @@
-const V='chess-v2',F=['./','index.html','style.css','engine.js','bot.js','app.js','manifest.webmanifest','icon-192.png','icon-512.png','click.mp3','move.mp3','capture.mp3','check.mp3','promote.mp3'];
+const V='chess-v3',F=['./','index.html','style.css','engine.js','bot.js','app.js','manifest.webmanifest','icon-192.png','icon-512.png','move.mp3','capture.mp3','check.mp3','promote.mp3'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(V).then(c=>c.addAll(F)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>clients.claim())));
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;

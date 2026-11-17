@@ -1,6 +1,6 @@
-:root{--bg:#e8edf1;--fg:#16212b;--pn:#fff;--bd:#c3ced8;--ac:#d9640a;--lt:#f6c177;--dk:#2f6db5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12181e;--fg:#e6edf3;--pn:#1c252e;--bd:#33414e;--ac:#f08a24}}
-:root[data-theme="dark"]{--bg:#12181e;--fg:#e6edf3;--pn:#1c252e;--bd:#33414e;--ac:#f08a24}
+:root{--bg:#e8edf1;--fg:#16212b;--pn:#fff;--bd:#c3ced8;--ac:#12807e;--lt:#e3e9ee;--dk:#5d7a93;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12181e;--fg:#e6edf3;--pn:#1c252e;--bd:#33414e;--ac:#2fb5b0}}
+:root[data-theme="dark"]{--bg:#12181e;--fg:#e6edf3;--pn:#1c252e;--bd:#33414e;--ac:#2fb5b0}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--fg);font:15px system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px}
 h1{margin:0;font:700 26px Georgia,serif;letter-spacing:.5px}
@@ -11,7 +11,7 @@ button.pri{background:var(--ac);color:#fff;border-color:var(--ac)}
 #bd{display:grid;grid-template:repeat(8,1fr)/repeat(8,1fr);width:min(94vw,520px);aspect-ratio:1;border-radius:6px;overflow:hidden;user-select:none;touch-action:manipulation}
 .sq{position:relative;display:flex;align-items:center;justify-content:center;font-size:min(9.2vw,48px);line-height:1;cursor:pointer}
 .l{background:var(--lt)}.d{background:var(--dk)}
-.sq.lm{box-shadow:inset 0 0 0 100px rgba(255,255,255,.4)}.sq.sel{box-shadow:inset 0 0 0 100px rgba(255,255,255,.7)}.sq.ck{box-shadow:inset 0 0 0 100px rgba(230,60,60,.7)}
+.sq.lm{box-shadow:inset 0 0 0 100px rgba(255,200,40,.4)}.sq.sel{box-shadow:inset 0 0 0 100px rgba(255,200,40,.75)}.sq.ck{box-shadow:inset 0 0 0 100px rgba(230,60,60,.7)}
 .sq.tg::after{content:"";position:absolute;width:30%;height:30%;border-radius:50%;background:rgba(0,0,0,.3)}
 .sq.tg.cp::after{width:86%;height:86%;background:none;border:4px solid rgba(0,0,0,.3)}
 .pw{color:var(--pw,#fff);text-shadow:0 0 2px #000,0 0 2px #000,0 0 1px #000}.pb{color:var(--pb,#15191d);text-shadow:0 0 2px rgba(255,255,255,.6)}
