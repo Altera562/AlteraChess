@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="style.css"></head><body>
 <h1>Chess Studio</h1>
-<div id="menu" class="scr"><div class="mn"><button class="pri" onclick="openSetup(STD,'w')">Play</button><button id="rs" onclick="go2('play')" style="display:none">Resume game</button><button onclick="editor()">Board editor</button><button onclick="go2('settings')">Settings</button></div></div>
+<div id="menu" class="scr"><div class="mn"><button class="pri" onclick="openSetup(STD,'w')">Play</button><button id="rs" onclick="resume()" style="display:none">Resume game</button><button onclick="editor()">Board editor</button><button onclick="go2('settings')">Settings</button></div></div>
 <div id="settings" class="scr" style="display:none"><div id="sh"><button onclick="go2('menu')">← Menu</button><b>Settings</b></div>
 <div id="thm"><label>Board theme<select onchange="setC(...TH[this.value])"><option>Slate</option><option>Orange &amp; Blue</option><option>Classic</option><option>Forest</option><option>Rose</option><option>Midnight</option></select></label>
 <label>Light squares<input type="color" id="c1" value="#e3e9ee" oninput="setC(this.value,$('c2').value)"></label>

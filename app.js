@@ -33,7 +33,7 @@ $('ctl').innerHTML=E?`<button onclick="ET=ET=='w'?'b':'w';render()">${ET=='w'?'W
 :`<button onclick="newGame(cfg)">Restart</button><button onclick="undo()">Undo</button><button onclick="flip^=1;render()">Flip</button>`}
 const fmt=x=>{x=Math.max(0,Math.ceil(x));return(x/60|0)+':'+String(x%60).padStart(2,'0')};
 function showClk(){$('ck').textContent=clk&&mode==='game'?`White ${fmt(clk.w)}  |  Black ${fmt(clk.b)}`:''}
-setInterval(()=>{const n=Date.now();if(clk&&mode==='game'&&scr==='play'&&!over){clk[S.t]-=(n-last)/1000;if(clk[S.t]<=0){clk[S.t]=0;flag=S.t;render()}else showClk()}last=n},250);
+setInterval(()=>{const n=Date.now();if(clk&&mode==='game'&&(scr==='play'||(cfg&&cfg.online))&&!over){clk[S.t]-=(n-last)/1000;if(clk[S.t]<=0){clk[S.t]=0;flag=S.t;render()}else showClk()}last=n},250);
 function maybeBot(){const lv=bots[S.t];if(!lv||over)return;const g=gid,t0=Date.now(),wait=opt.delay?Math.max(lv<=5?1000+Math.random()*1000:lv<=7?600:0,bots.w&&bots.b?500:0):0;$('st').textContent='Bot is thinking…';
 setTimeout(()=>{if(g!==gid||over)return;const m=think(S,lv);setTimeout(()=>{if(g!==gid||over)return;m&&doMove(m)},Math.max(0,t0+wait-Date.now()))},60)}
 function undo(){if(!H.length||pend||(bots.w&&bots.b))return;gid++;flag=0;let x=H.pop();S=x.s;lm=x.l;if(bots[S.t]&&H.length){x=H.pop();S=x.s;lm=x.l}sel=-1;tg=[];render();maybeBot()}
@@ -53,3 +53,8 @@ go2('menu');
 const SN={move:.6,capture:.7,check:.8,promote:.7},AU={};
 for(const k in SN){AU[k]=new Audio(k+'.mp3');AU[k].preload='auto'}
 function snd(k){if(!opt.snd)return;const a=AU[k].cloneNode();a.volume=SN[k];a.play().catch(()=>{})}
+
+/* Pause rule: offline games (vs bot, local, bot vs bot) freeze while you are off the game screen.
+   A game whose cfg has online:true (future online mode) keeps running in the background, like chess.com. */
+function resume(){go2('play');maybeBot()}
+const _g=go2;go2=n=>{if(scr==='play'&&n!=='play'&&mode==='game'&&!(cfg&&cfg.online))gid++;_g(n)};
