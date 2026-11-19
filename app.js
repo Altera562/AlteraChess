@@ -14,10 +14,10 @@ if(p&&isW(p)===(S.t==='w')){sel=i;tg=legal(S).filter(m=>m.f===i)}else{sel=-1;tg=
 function askPromo(ms){pend=1;promoMs=ms;const w=S.t==='w';
 $('mb').innerHTML='<b>Promote pawn to</b><div style="display:flex;gap:8px;justify-content:center">'+[...'qrbn'].map(q=>`<button style="font-size:34px" onclick="pick('${q}')"><span class="${w?'pw':'pb'}">${G[q.toUpperCase()]}\uFE0E</span></button>`).join('')+'</div>';$('md').className='on'}
 function pick(q){$('md').className='';pend=0;doMove(promoMs.find(m=>m.pr===q))}
-function openSetup(b,t){const L=[1,300,600,900,1200,1500,1700,1900,2000,2200];cand={b:b.slice(),t};
+function openSetup(b,t){const L=[1,300,600,900,1200,1500,1700,2200,2800,'3000+'];cand={b:b.slice(),t};
 $('mb').innerHTML=`<b>Start game${b===STD?'':' – custom board'}</b>
 <label>Opponent <select id="o" onchange="$('bo').style.display=this.value=='bot'?'flex':'none'"><option value="bot">Bot</option><option value="p2">Local player</option></select></label>
-<div id="bo" style="display:flex;flex-direction:column;gap:10px"><label>Level <select id="lv">${L.map((e,i)=>`<option value="${i+1}"${i==4?' selected':''}>${i+1} (~${e} Elo${i==9?', max':''})</option>`).join('')}</select></label>
+<div id="bo" style="display:flex;flex-direction:column;gap:10px"><label>Level <select id="lv">${L.map((e,i)=>`<option value="${i+1}"${i==4?' selected':''}>${i+1} (~${e} Elo${i==9?', max':''})${i>6?' · Stockfish':''}</option>`).join('')}</select></label>
 <label>You play <select id="cl"><option value="w">White</option><option value="b">Black</option><option value="r">Random</option></select></label></div>
 <button class="pri" onclick="go()">Play ▶</button><button onclick="$('md').className=''">Cancel</button>`;$('md').className='on'}
 function go(){$('md').className='';newGame({b:cand.b,t:cand.t,opp:$('o').value,L:+$('lv').value,col:$('cl').value})}
@@ -38,7 +38,7 @@ function maybeBot(){const lv=bots[S.t];if(!lv||over)return;const g=gid,t0=Date.n
 setTimeout(()=>{if(g!==gid||over)return;const m=think(S,lv);setTimeout(()=>{if(g!==gid||over)return;m&&doMove(m)},Math.max(0,t0+wait-Date.now()))},60)}
 function undo(){if(!H.length||pend||(bots.w&&bots.b))return;gid++;flag=0;let x=H.pop();S=x.s;lm=x.l;if(bots[S.t]&&H.length){x=H.pop();S=x.s;lm=x.l}sel=-1;tg=[];render();maybeBot()}
 function opc(){const v=$('o').value;$('r1').style.display=v=='p2'?'none':'';$('r2').style.display=v=='bb'?'':'none';$('r3').style.display=v=='bot'?'':'none';$('r1').firstChild.textContent=v=='bb'?'White bot ':'Bot level '}
-function openSetup(b,t){const L=[1,300,600,900,1200,1500,1700,1900,2000,2200],o=L.map((e,i)=>`<option value="${i+1}"${i==4?' selected':''}>${i+1} (~${e} Elo${i==9?', max':''})</option>`).join('');cand={b:b.slice(),t,v:b===STD||b===CVC};
+function openSetup(b,t){const L=[1,300,600,900,1200,1500,1700,2200,2800,'3000+'],o=L.map((e,i)=>`<option value="${i+1}"${i==4?' selected':''}>${i+1} (~${e} Elo${i==9?', max':''})${i>6?' · Stockfish':''}</option>`).join('');cand={b:b.slice(),t,v:b===STD||b===CVC};
 $('mb').innerHTML=`<b>Start game${cand.v?'':' – custom board'}</b>${cand.v?'<label>Mode <select id="vr"><option value="std">Standard chess</option><option value="cvc">Chess vs Checkers</option></select></label>':''}
 <label>Opponent <select id="o" onchange="opc()"><option value="bot">Bot</option><option value="p2">Local player</option><option value="bb">Bot vs Bot</option></select></label>
 <label id="r1">Bot level <select id="lv">${o}</select></label><label id="r2" style="display:none">Black bot <select id="lv2">${o}</select></label>
